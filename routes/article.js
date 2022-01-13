@@ -6,7 +6,6 @@ router.get("/", function (req, res, next) {
 });
 
 router.get("/query", function (req, res, next) {
-  console.log(req.query);
   var obj = {};
   if (req.query.name) {
     obj.name = req.query.name;
@@ -16,13 +15,10 @@ router.get("/query", function (req, res, next) {
   }
   // 富查询条件，对象格式，键值对，下面为查询 name 为 lisi 的记录
   StudentModel.find(obj).then((doc) => {
-    console.log(doc);
     res.send({ data: doc, status: "query成功了" });
   });
 });
 router.post("/insert", function (req, res, next) {
-  console.log(req.body);
-  console.log(res);
   // 通过实例化model创建文档
   let studentDoc = new StudentModel(req.body);
   // 将文档插入到数据库，save方法返回一个Promise对象。
@@ -32,7 +28,6 @@ router.post("/insert", function (req, res, next) {
   });
 });
 router.post("/remote", function (req, res, next) {
-  console.log(req);
   // 下面把name为lisi的记录删除
   StudentModel.remove(req.body).then((result) => {
     console.log(result);
@@ -40,7 +35,6 @@ router.post("/remote", function (req, res, next) {
   });
 });
 router.post("/update", function (req, res, next) {
-  console.log(req);
   // 下面把name为lisi的记录，将他的age修改为80
   let doc = { name: req.body.name, age: req.body.age || 0 };
   StudentModel.updateOne({ _id: req.body._id }, { $set: doc }).then(
